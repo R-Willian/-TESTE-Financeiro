@@ -1,0 +1,1752 @@
+/**
+ * ============================================================================
+ * FINMOBILE - DESIGN SYSTEM & MOBILE ERGONOMICS (CSS)
+ * ============================================================================
+ * TEMA CLARO: Shadcn UI (Zinc Clean & Emerald Accent)
+ * Foco estrito em ergonomia móvel, touch targets de 44-48px, micro-interações,
+ * anéis de foco sutis, cards refinados e alta fidelidade visual estilo PWA nativo.
+ *
+ * NOTA: O tema escuro é controlado de forma 100% independente em dark-theme.css.
+ * ============================================================================
+ */
+
+:root {
+  /* Shadcn Base Tokens - Modo Claro (Emerald / Zinc Clean) */
+  --background: #fafafa;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: rgba(16, 185, 129, 0.4);
+
+  /* Acentos Shadcn Emerald */
+  --primary: #059669;
+  --primary-hover: #047857;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+
+  /* Shadcn Chart & Visualization Tokens (Light Mode) */
+  --chart-1: #059669;
+  --chart-2: #64748b;
+  --chart-grid: #e4e4e7;
+  --chart-axis: #71717a;
+  --chart-bg: #ffffff;
+  --chart-gradient-start: rgba(5, 150, 105, 0.22);
+  --chart-gradient-end: rgba(5, 150, 105, 0.0);
+  --chart-badge-bg: #ffffff;
+  --chart-badge-border: rgba(239, 68, 68, 0.45);
+  --chart-badge-text: #ef4444; /* Vermelho destacado exclusivo para o valor no gráfico */
+
+  /* Aliases do Projeto (Garante 100% de compatibilidade funcional) */
+  --brand-primary: #059669;
+  --brand-primary-light: #10b981;
+  --brand-primary-dark: #047857;
+  --brand-accent: #10b981;
+  --brand-accent-soft: rgba(16, 185, 129, 0.12);
+
+  /* Semântica Financeira */
+  --color-despesa: #ef4444;
+  --color-despesa-soft: #fee2e2;
+  --color-receita: #10b981;
+  --color-receita-soft: #d1fae5;
+  --color-warning: #f59e0b;
+  --color-warning-soft: #fef3c7;
+  --color-info: #0ea5e9;
+  --color-info-soft: #e0f2fe;
+
+  /* Superfícies */
+  --bg-page: #fafafa;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --bg-input-focus: #ffffff;
+  --bg-muted: #f4f4f5;
+
+  /* Tipografia & Bordas */
+  --text-primary: #09090b;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+  --border-light: #e4e4e7;
+  --border-focus: #10b981;
+
+  /* Sombras & Raios Shadcn */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+  --radius: 12px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --shadow-elevated: 0 10px 25px -5px rgba(5, 150, 105, 0.15), 0 8px 10px -6px rgba(5, 150, 105, 0.1);
+
+  /* Dimensões Mobile */
+  --touch-min-height: 46px;
+  --bottom-nav-height: 64px;
+}
+
+/* ==========================================================================
+   RESET & ESTRUTURA BASE MOBILE
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  background-color: #f4f4f5;
+  color-scheme: light;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  /* Viewport mobile estrito */
+  margin: 0 auto;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.06);
+  border-left: 1px solid var(--border-light);
+  border-right: 1px solid var(--border-light);
+  position: relative;
+  overflow-x: hidden;
+  padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + 24px);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   TOP APP BAR (ESTILO SHADCN HEADER COM FROSTED BLUR)
+   ========================================================================== */
+.top-bar {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--text-primary);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding-top: env(safe-area-inset-top);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.top-bar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  height: 60px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  background: rgba(16, 185, 129, 0.1);
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand-primary);
+}
+
+.brand-text h1 {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--text-primary);
+}
+
+.sub-brand {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Botão de Toggle de Tema (Modo Claro - Shadcn Clean) */
+.theme-toggle-btn,
+html:not([data-theme="dark"]) .theme-toggle-btn,
+html[data-theme="light"] .theme-toggle-btn {
+  background-color: #ffffff;
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+html:not([data-theme="dark"]) .theme-toggle-btn:hover,
+html[data-theme="light"] .theme-toggle-btn:hover {
+  background-color: var(--bg-muted);
+  color: var(--text-primary);
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.08);
+}
+
+html:not([data-theme="dark"]) .theme-toggle-btn:active,
+html[data-theme="light"] .theme-toggle-btn:active {
+  transform: scale(0.94);
+}
+
+/* Ícone Sol (oculto no modo claro) */
+html:not([data-theme="dark"]) .theme-toggle-btn .icon-sun,
+html[data-theme="light"] .theme-toggle-btn .icon-sun {
+  display: none !important;
+}
+
+/* Ícone Lua (visível e com contraste nítido no modo claro) */
+html:not([data-theme="dark"]) .theme-toggle-btn .icon-moon,
+html[data-theme="light"] .theme-toggle-btn .icon-moon {
+  display: block !important;
+  color: #27272a;
+  stroke: #27272a;
+}
+
+html:not([data-theme="dark"]) .theme-toggle-btn:hover .icon-moon,
+html[data-theme="light"] .theme-toggle-btn:hover .icon-moon {
+  color: var(--brand-primary);
+  stroke: var(--brand-primary);
+}
+
+/* Status Indicator */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-muted);
+  padding: 5px 10px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--brand-accent);
+}
+
+.status-dot.online {
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+}
+
+.status-dot.syncing {
+  background-color: var(--color-warning);
+  animation: pulseSync 1s infinite alternate;
+}
+
+.status-dot.error {
+  background-color: var(--color-despesa);
+}
+
+@keyframes pulseSync {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   CONTAINER PRINCIPAL & TRANSIÇÃO DE TELAS
+   ========================================================================== */
+.main-container {
+  padding: 16px;
+  flex: 1;
+}
+
+.view {
+  display: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.view.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.view-header {
+  margin-bottom: 20px;
+}
+
+.view-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.025em;
+  margin-bottom: 4px;
+}
+
+.view-header p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   FORMULÁRIOS & CAMPOS ERGONÔMICOS MOBILE (SHADCN INPUTS)
+   ========================================================================== */
+.mobile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.group-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.required {
+  color: var(--color-despesa);
+  font-weight: 600;
+}
+
+.optional {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.label-with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-link-btn {
+  background: none;
+  border: none;
+  color: var(--brand-primary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  transition: opacity 0.15s ease;
+}
+
+.text-link-btn:active {
+  opacity: 0.7;
+}
+
+/* Inputs & Selects Shadcn Style */
+.form-input,
+.form-select {
+  width: 100%;
+  height: var(--touch-min-height);
+  padding: 0 12px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-card);
+  font-size: 15px;
+  /* Impede zoom automático do iOS Safari */
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  font-family: inherit;
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 2px var(--ring);
+  background-color: var(--bg-input-focus);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--text-secondary);
+  border-bottom: 2px solid var(--text-secondary);
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+
+.form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+/* Campo Monetário em Destaque (Shadcn Currency Card) */
+.input-money-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 0 14px;
+  height: 52px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s ease;
+}
+
+.input-money-wrapper:focus-within {
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.currency-prefix {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--brand-primary);
+  margin-right: 8px;
+}
+
+.input-money {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   SEGMENTED CONTROLS (TABS SHADCN STYLE)
+   ========================================================================== */
+.segmented-control {
+  display: flex;
+  background-color: var(--bg-muted);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  gap: 3px;
+  border: 1px solid var(--border-light);
+}
+
+.segmented-control.compact {
+  padding: 2px;
+}
+
+.segment-btn {
+  flex: 1;
+  height: 40px;
+  border: none;
+  background: transparent;
+  border-radius: calc(var(--radius-md) - 2px);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+}
+
+.segmented-control.compact .segment-btn {
+  height: 36px;
+  font-size: 12px;
+}
+
+.segment-btn.active {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Seletor Tipo: Despesa vs Receita */
+.segment-btn.type-despesa.active {
+  color: var(--color-despesa);
+  background: var(--bg-card);
+}
+
+.segment-btn.type-receita.active {
+  color: var(--color-receita);
+  background: var(--bg-card);
+}
+
+.type-bullet {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.type-bullet.red {
+  background-color: var(--color-despesa);
+}
+
+.type-bullet.green {
+  background-color: var(--color-receita);
+}
+
+/* Caixa Condicional (Animação de Revelação) */
+.conditional-box {
+  display: none;
+  animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.conditional-box.visible {
+  display: flex;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   CARDS & SWITCHES (SHADCN CARD)
+   ========================================================================== */
+.form-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.toggle-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toggle-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.toggle-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Switch Toggle Shadcn Style */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e4e4e7;
+  transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 24px;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: #ffffff;
+  transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+input:checked+.slider {
+  background-color: var(--brand-accent);
+}
+
+input:checked+.slider::before {
+  transform: translateX(20px);
+}
+
+/* ==========================================================================
+   CONFIGURAÇÃO & PREVIEW DE PARCELAS
+   ========================================================================== */
+.parcelas-config-box {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+  background-color: var(--bg-muted);
+  border: 1px dashed var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  animation: slideDown 0.2s ease;
+}
+
+.parcelas-config-box.visible {
+  display: flex;
+}
+
+.stepper-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepper-btn {
+  width: 44px;
+  height: 44px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.stepper-btn:active {
+  background-color: var(--bg-muted);
+  transform: scale(0.96);
+}
+
+.stepper-input {
+  flex: 1;
+  height: 44px;
+  text-align: center;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  background-color: var(--bg-card);
+  outline: none;
+}
+
+.parcelas-preview-box {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  border: 1px solid var(--border-light);
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.badge-tag {
+  background-color: var(--brand-accent-soft);
+  color: var(--brand-primary);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.preview-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 160px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.preview-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  padding: 6px 10px;
+  background: var(--bg-muted);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+}
+
+.preview-list li .parc-num {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.preview-list li .parc-date {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.preview-list li .parc-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: var(--color-despesa);
+}
+
+/* ==========================================================================
+   BOTÕES DE AÇÃO (SHADCN BUTTONS)
+   ========================================================================== */
+.form-actions {
+  margin-top: 8px;
+}
+
+.btn {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+  letter-spacing: -0.01em;
+}
+
+.btn-primary {
+  background: var(--brand-primary);
+  color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+  margin-top: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-muted);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.btn-secondary .btn-spinner {
+  border-color: rgba(0, 0, 0, 0.15);
+  border-top-color: var(--brand-primary);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   TELA DE CATEGORIAS (CAD_AUX)
+   ========================================================================== */
+.existing-categories-section {
+  margin-top: 24px;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section-title-row h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.category-filter-chips {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.chip {
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-light);
+  background-color: var(--bg-card);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chip.active {
+  background-color: var(--text-primary);
+  color: #ffffff;
+  border-color: var(--text-primary);
+}
+
+.categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-bottom: 8px;
+  padding-right: 2px;
+}
+
+.cat-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 14px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html:not([data-theme="dark"]) .cat-badge:hover {
+  background-color: var(--bg-muted);
+  transform: translateX(2px);
+}
+
+[data-theme="dark"] .cat-badge:hover {
+  background-color: rgba(16, 185, 129, 0.08);
+  transform: translateX(2px);
+}
+
+.cat-badge.despesa {
+  border-left: 3.5px solid var(--color-despesa);
+}
+
+.cat-badge.receita {
+  border-left: 3.5px solid var(--color-receita);
+}
+
+.cat-badge .cat-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cat-type-label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2.5px 8px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.cat-type-label.despesa {
+  background-color: var(--color-despesa-soft);
+  color: var(--color-despesa);
+}
+
+.cat-type-label.receita {
+  background-color: var(--color-receita-soft);
+  color: var(--color-receita);
+}
+
+.empty-state {
+  width: 100%;
+  text-align: center;
+  padding: 24px 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   TELA 4: CARD PREVISÃO DO PRÓXIMO MÊS (SHADCN FINTECH CARD)
+   ========================================================================== */
+.forecast-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-btn-refresh {
+  width: 36px;
+  height: 36px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s ease;
+}
+
+.icon-btn-refresh:hover {
+  color: var(--text-primary);
+}
+
+.icon-btn-refresh:active {
+  transform: rotate(45deg);
+}
+
+.forecast-filters {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  scrollbar-width: none;
+}
+
+.forecast-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.forecast-pill {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.forecast-pill.active {
+  background: var(--text-primary);
+  color: #ffffff;
+  border-color: var(--text-primary);
+}
+
+/* Card Herói de Previsão Shadcn */
+.forecast-hero-card {
+  background: linear-gradient(145deg, #064e3b 0%, #022c22 100%);
+  border-radius: var(--radius-lg);
+  padding: 20px 18px;
+  color: #ffffff;
+  box-shadow: var(--shadow-elevated);
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.forecast-hero-card::after {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.hero-caption {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-period {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.14);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+  width: fit-content;
+  white-space: nowrap;
+}
+
+/* Carrossel de Chips de Competências (Mobile Touch Target 44px) */
+.forecast-chips-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 6px 2px 10px 2px;
+  margin: 12px 0 6px 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  contain: paint;
+}
+
+.forecast-chips-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.forecast-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 66px;
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  user-select: none;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.forecast-chip:active {
+  transform: scale(0.97);
+}
+
+.forecast-chip .chip-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.forecast-chip .chip-sub {
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+  margin-top: 2px;
+  line-height: 1;
+}
+
+.forecast-chip.active {
+  background: #ffffff;
+  color: #047857;
+  border-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+}
+
+.forecast-chip.active .chip-sub {
+  color: #047857;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.hero-amount {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+  color: #ffffff;
+}
+
+.hero-count-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+  margin-bottom: 6px;
+}
+
+.hero-count-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.01em;
+}
+
+.hero-count-pill::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+}
+
+.hero-formula-hint {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   GRÁFICO DE EVOLUÇÃO DE DESPESAS (SHADCN CHART DESIGN SYSTEM)
+   ========================================================================== */
+.forecast-chart-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 14px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.chart-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chart-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chart-title-icon {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.chart-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.chart-subtitle {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-indicator {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.legend-indicator.legend-primary {
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--chart-1);
+}
+
+.legend-indicator.legend-trend {
+  width: 14px;
+  height: 0;
+  border-top: 2px dashed var(--chart-2);
+}
+
+.legend-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+/* Canvas/SVG do Gráfico Mobile (~185px) */
+.chart-canvas-container {
+  width: 100%;
+  height: 185px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  background: transparent;
+}
+
+.forecast-svg-chart {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+
+.chart-loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+.spinner-sm {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Barra inferior de estatísticas e tendência linear */
+.chart-footer-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  gap: 8px;
+}
+
+.stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--muted);
+  color: var(--foreground);
+  transition: all 0.2s ease;
+}
+
+.stat-badge.trend-up {
+  background: var(--color-despesa-soft);
+  color: var(--color-despesa);
+}
+
+.stat-badge.trend-down {
+  background: var(--color-receita-soft);
+  color: var(--color-receita);
+}
+
+.stat-badge.trend-stable {
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.stat-icon {
+  flex-shrink: 0;
+}
+
+.stat-avg {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.audit-card {
+  background-color: var(--bg-muted);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.audit-card svg {
+  flex-shrink: 0;
+  color: var(--brand-primary);
+  margin-top: 1px;
+}
+
+/* ==========================================================================
+   TELA 5: TABELA DE HISTÓRICO DE LANÇAMENTOS (REGISTROS)
+   ========================================================================== */
+.table-container {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.data-table thead tr {
+  background-color: var(--bg-muted);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.data-table th {
+  padding: 10px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.data-table th.th-escopo {
+  width: 28%;
+}
+
+.data-table th.th-categoria {
+  width: 36%;
+}
+
+.data-table th.th-valor {
+  width: 36%;
+  text-align: right;
+}
+
+.data-table tbody td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 12.5px;
+  vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Indicador de Despesa vs Receita por linha */
+.data-table tbody tr.row-despesa {
+  border-left: 3.5px solid var(--color-despesa);
+}
+
+.data-table tbody tr.row-receita {
+  border-left: 3.5px solid var(--color-receita);
+}
+
+/* Badges de Escopo */
+.badge-escopo {
+  display: inline-block;
+  padding: 3px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.badge-escopo.pessoal {
+  background-color: #E0F2FE;
+  color: #0369A1;
+  border: 1px solid #BAE6FD;
+}
+
+.badge-escopo.empresarial {
+  background-color: #EDE9FE;
+  color: #6D28D9;
+  border: 1px solid #DDD6FE;
+}
+
+/* Categoria */
+.cat-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.3;
+}
+
+/* Coluna de Valor */
+.td-valor {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.td-valor.valor-despesa {
+  color: var(--color-despesa);
+}
+
+.td-valor.valor-receita {
+  color: var(--color-receita);
+}
+
+/* Estados da Tabela */
+.table-loading,
+.table-empty {
+  text-align: center;
+  padding: 30px 16px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.table-empty.error {
+  color: var(--color-despesa);
+}
+
+/* ==========================================================================
+   PAGINAÇÃO DA TABELA (SHADCN PAGINATION)
+   ========================================================================== */
+.pagination-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.pagination-info {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.pagination-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-pagination {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 11.5px;
+  font-weight: 600;
+  height: 34px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.btn-pagination:hover:not(:disabled) {
+  background-color: var(--bg-muted);
+  border-color: var(--text-secondary);
+}
+
+.btn-pagination:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.btn-pagination:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pagination-current-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  padding: 4px 8px;
+  background-color: var(--bg-muted);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+/* ==========================================================================
+   BOTTOM NAVIGATION BAR (SHADCN DOCK FROSTED GLASS)
+   ========================================================================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+  background-color: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding-top: 6px;
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 100;
+}
+
+.nav-item {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+  padding: 0 1px;
+  height: 48px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  position: relative;
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.nav-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.nav-item.active {
+  color: var(--brand-primary);
+}
+
+.nav-item.active .nav-label {
+  font-weight: 600;
+}
+
+.nav-item.active .nav-icon {
+  transform: translateY(-1px);
+  color: var(--brand-primary);
+}
+
+.nav-item:active {
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   TOASTS / NOTIFICAÇÕES FLUTUANTES (SHADCN SONNER STYLE)
+   ========================================================================== */
+.toast-container {
+  position: fixed;
+  top: calc(70px + env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 440px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-light);
+  border-left: 4px solid var(--brand-primary);
+  animation: toastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1), toastOut 0.25s cubic-bezier(0.16, 1, 0.3, 1) 3.7s forwards;
+}
+
+.toast.success {
+  border-left-color: var(--brand-accent);
+}
+
+.toast.error {
+  border-left-color: var(--color-despesa);
+}
+
+.toast.warning {
+  border-left-color: var(--color-warning);
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}

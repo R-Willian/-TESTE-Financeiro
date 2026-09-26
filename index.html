@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0D3C1F">
+    <meta name="description" content="Web App Mobile de Lançamento Financeiro Integrado">
+    <title>MMH - Finanças</title>
+
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Anti-flicker Script: aplica data-theme antes da renderização se já salvo -->
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem("mmh_theme");
+                if (saved === "dark") {
+                    document.documentElement.setAttribute("data-theme", "dark");
+                    var metaTheme = document.querySelector('meta[name="theme-color"]');
+                    if (metaTheme) metaTheme.setAttribute("content", "#030706");
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/dark-theme.css">
+</head>
+
+<body>
+    <!-- Top App Bar -->
+    <header class="top-bar">
+        <div class="top-bar-content">
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>MMH-Finan</h1>
+                    <span class="sub-brand">Gestão Financeira</span>
+                </div>
+            </div>
+            <div class="top-bar-actions">
+                <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" title="Alternar tema claro/escuro"
+                    aria-label="Alternar tema claro/escuro">
+                    <!-- Ícone Sol (exibido no modo escuro para alternar para o claro) -->
+                    <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <!-- Ícone Lua (exibido no modo claro para alternar para o escuro) -->
+                    <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <div class="status-indicator" id="status-indicator" title="Modo de Teste (Memória Volátil)">
+                    <span class="status-dot online" id="status-dot"></span>
+                    <span class="status-label" id="status-label">Modo Teste</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- =================================================================== -->
+        <!-- TELA 1: NOVO LANÇAMENTO                                             -->
+        <!-- =================================================================== -->
+        <section id="view-lancamento" class="view active">
+            <div class="view-header">
+                <h2>Novo Lançamento</h2>
+                <p>Insira despesas ou receitas avulsas e parceladas</p>
+            </div>
+
+            <form id="form-lancamento" class="mobile-form" novalidate>
+                <!-- Escopo (Pessoal / Empresarial) -->
+                <div class="form-group">
+                    <label class="group-label">Escopo da Transação</label>
+                    <div class="segmented-control" id="escopo-lancamento">
+                        <button type="button" class="segment-btn active" data-value="Pessoal">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            Pessoal
+                        </button>
+                        <button type="button" class="segment-btn" data-value="Empresarial">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                            </svg>
+                            Empresarial
+                        </button>
+                    </div>
+                    <input type="hidden" id="lancamento-escopo" name="escopo" value="Pessoal">
+                </div>
+
+                <!-- Sub-origem Empresarial (MT / MS) - Condicional -->
+                <div class="form-group conditional-box" id="box-suborigem-lancamento">
+                    <label class="group-label">Unidade Empresarial <span class="required">*</span></label>
+                    <div class="segmented-control compact" id="suborigem-lancamento">
+                        <button type="button" class="segment-btn active" data-value="Mato Grosso (MT)">
+                            Mato Grosso (MT)
+                        </button>
+                        <button type="button" class="segment-btn" data-value="Mato Grosso do Sul (MS)">
+                            Mato Grosso do Sul (MS)
+                        </button>
+                    </div>
+                    <input type="hidden" id="lancamento-suborigem" name="subOrigem" value="Mato Grosso (MT)">
+                </div>
+
+                <!-- Tipo de Transação (Despesa / Receita) -->
+                <div class="form-group">
+                    <label class="group-label">Tipo de Transação</label>
+                    <div class="segmented-control type-selector" id="tipo-lancamento">
+                        <button type="button" class="segment-btn type-despesa active" data-value="Despesa">
+                            <span class="type-bullet red"></span> Despesa
+                        </button>
+                        <button type="button" class="segment-btn type-receita" data-value="Receita">
+                            <span class="type-bullet green"></span> Receita
+                        </button>
+                    </div>
+                    <input type="hidden" id="lancamento-tipo" name="tipoTransacao" value="Despesa">
+                </div>
+
+                <!-- Valor Principal -->
+                <div class="form-group">
+                    <label for="lancamento-valor" class="group-label">Valor (R$) <span class="required">*</span></label>
+                    <div class="input-money-wrapper">
+                        <span class="currency-prefix">R$</span>
+                        <input type="text" id="lancamento-valor" name="valor" class="input-money" inputmode="numeric"
+                            placeholder="0,00" required>
+                    </div>
+                </div>
+
+                <!-- Categoria -->
+                <div class="form-group">
+                    <div class="label-with-action">
+                        <label for="lancamento-categoria" class="group-label">Categoria <span
+                                class="required">*</span></label>
+                        <button type="button" class="text-link-btn" id="btn-quick-new-category">+ Nova
+                            Categoria</button>
+                    </div>
+                    <div class="select-wrapper">
+                        <select id="lancamento-categoria" name="categoria" class="form-select" required>
+                            <option value="" disabled selected>Selecione uma categoria...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Descrição (Opcional) -->
+                <div class="form-group">
+                    <label for="lancamento-descricao" class="group-label">Descrição <span
+                            class="optional">(opcional)</span></label>
+                    <input type="text" id="lancamento-descricao" name="descricao" class="form-input" maxlength="80">
+                </div>
+
+                <!-- Data de Competência / Vencimento -->
+                <div class="form-group">
+                    <label for="lancamento-data" class="group-label">Competência / Vencimento <span
+                            class="required">*</span></label>
+                    <input type="date" id="lancamento-data" name="dataCompetencia" class="form-input" required>
+                </div>
+
+                <!-- Switch de Parcelamento -->
+                <div class="form-card toggle-card">
+                    <div class="toggle-info">
+                        <span class="toggle-title">Compra Parcelada?</span>
+                        <span class="toggle-subtitle">Gera parcelas mensais automáticas</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="lancamento-parcelado" name="parcelado">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- Box de Configuração de Parcelas - Condicional -->
+                <div class="form-card parcelas-config-box" id="box-parcelas">
+                    <div class="form-group">
+                        <label for="lancamento-total-parcelas" class="group-label">Quantidade de Parcelas</label>
+                        <div class="stepper-wrapper">
+                            <button type="button" class="stepper-btn" id="btn-parc-minus">−</button>
+                            <input type="number" id="lancamento-total-parcelas" name="totalParcelas"
+                                class="stepper-input" min="2" max="1000" value="2">
+                            <button type="button" class="stepper-btn" id="btn-parc-plus">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="group-label">O valor digitado acima corresponde a:</label>
+                        <div class="segmented-control compact" id="modo-calculo-parcelas">
+                            <button type="button" class="segment-btn active" data-mode="parcela">Valor por
+                                Parcela</button>
+                            <button type="button" class="segment-btn" data-mode="total">Valor Total da Compra</button>
+                        </div>
+                    </div>
+
+                    <!-- Cronograma Preview -->
+                    <div class="parcelas-preview-box">
+                        <div class="preview-header">
+                            <span>Cronograma Previsto</span>
+                            <span id="preview-resumo" class="badge-tag">2x de R$ 0,00</span>
+                        </div>
+                        <ul class="preview-list" id="parcelas-preview-list">
+                            <!-- Renderizado via script.js -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Botão Salvar -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="btn-salvar-lancamento">
+                        <span class="btn-text">Salvar Lançamento</span>
+                        <span class="btn-spinner" style="display: none;"></span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+
+        <!-- =================================================================== -->
+        <!-- TELA 2: CADASTRO DE CATEGORIAS (CAD_AUX)                            -->
+        <!-- =================================================================== -->
+        <section id="view-categorias" class="view">
+            <div class="view-header">
+                <h2>Cadastros Auxiliares</h2>
+                <p>Crie novas categorias para organizar seus lançamentos</p>
+            </div>
+
+            <form id="form-categoria" class="mobile-form" novalidate>
+                <div class="form-card">
+                    <div class="form-group">
+                        <label class="group-label">Escopo</label>
+                        <div class="segmented-control" id="escopo-cad-cat">
+                            <button type="button" class="segment-btn active" data-value="Pessoal">Pessoal</button>
+                            <button type="button" class="segment-btn" data-value="Empresarial">Empresarial</button>
+                        </div>
+                        <input type="hidden" id="cat-escopo" name="escopo" value="Pessoal">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="group-label">Tipo de Transação</label>
+                        <div class="segmented-control type-selector" id="tipo-cad-cat">
+                            <button type="button" class="segment-btn type-despesa active" data-value="Despesa">
+                                <span class="type-bullet red"></span> Despesa
+                            </button>
+                            <button type="button" class="segment-btn type-receita" data-value="Receita">
+                                <span class="type-bullet green"></span> Receita
+                            </button>
+                        </div>
+                        <input type="hidden" id="cat-tipo" name="tipoTransacao" value="Despesa">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cat-nome" class="group-label">Nome da Nova Categoria <span
+                                class="required">*</span></label>
+                        <input type="text" id="cat-nome" name="categoriaNome" class="form-input" required
+                            maxlength="40">
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary" id="btn-salvar-categoria">
+                        <span class="btn-text">+ Cadastrar Categoria</span>
+                        <span class="btn-spinner" style="display: none;"></span>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Lista de Categorias Existentes -->
+            <div class="existing-categories-section">
+                <div class="section-title-row">
+                    <h3>Categorias Cadastradas</h3>
+                    <span class="badge-tag" id="count-categorias">0 cadastradas</span>
+                </div>
+
+                <div class="category-filter-chips">
+                    <button type="button" class="chip active" data-chip="Pessoal">Pessoal</button>
+                    <button type="button" class="chip" data-chip="Empresarial">Empresarial</button>
+                </div>
+
+                <div class="categories-list" id="lista-categorias-container">
+                    <!-- Renderizado dinamicamente -->
+                    <div class="empty-state">Carregando categorias...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TELA 3: PREVISÃO FINANCEIRA                                         -->
+        <!-- =================================================================== -->
+        <section id="view-previsao" class="view">
+            <div class="view-header">
+                <div class="forecast-header-row">
+                    <div>
+                        <h2>Previsão de Gastos</h2>
+                        <p id="label-mes-previsao">Próximo Mês</p>
+                    </div>
+                    <button type="button" class="icon-btn-refresh" id="btn-atualizar-previsao"
+                        title="Atualizar Previsão">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filtro Rápido de Previsão -->
+            <div class="forecast-filters">
+                <button type="button" class="forecast-pill active" data-filtro="Geral">Geral</button>
+                <button type="button" class="forecast-pill" data-filtro="Pessoal">Pessoal</button>
+                <button type="button" class="forecast-pill" data-filtro="Empresarial MT">Empresarial MT</button>
+                <button type="button" class="forecast-pill" data-filtro="Empresarial MS">Empresarial MS</button>
+            </div>
+
+            <!-- Card Principal: Total Previsto com Seletor Temporal -->
+            <div class="forecast-hero-card" id="forecast-hero">
+                <div class="hero-top">
+                    <span class="hero-caption">Total de Gastos Previstos</span>
+                    <span class="hero-period" id="forecast-periodo">Calculando...</span>
+                </div>
+
+                <div class="hero-amount" id="forecast-total">R$ 0,00</div>
+
+                <div class="hero-count-wrapper">
+                    <span class="hero-count-pill" id="forecast-count-parcelas">0 lançamentos</span>
+                </div>
+
+                <!-- Carrossel de Chips de Competências (Mobile-First Touch Target 44px) -->
+                <div class="forecast-chips-scroll" id="forecast-month-chips" role="tablist"
+                    aria-label="Meses de Previsão">
+                    <!-- Renderizado dinamicamente via JS -->
+                </div>
+
+                <div class="hero-formula-hint">
+                    Soma das Parcelas a Vencer no Mês Selecionado
+                </div>
+            </div>
+
+            <!-- =============================================================== -->
+            <!-- GRÁFICO DE EVOLUÇÃO DE DESPESAS (PROJEÇÃO & LINHA DE TENDÊNCIA) -->
+            <!-- =============================================================== -->
+            <div class="forecast-chart-card" id="forecast-chart-card">
+                <div class="chart-header">
+                    <div class="chart-title-group">
+                        <div class="chart-title-row">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                                class="chart-title-icon">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                            </svg>
+                            <h3 class="chart-title">Evolução de Despesas</h3>
+                        </div>
+                        <p class="chart-subtitle">Projeção dos próximos meses com linha de tendência</p>
+                    </div>
+
+                    <!-- Legenda do Gráfico (shadcn tokens / dark cyber) -->
+                    <div class="chart-legend" aria-hidden="true">
+                        <div class="legend-item">
+                            <span class="legend-indicator legend-primary"></span>
+                            <span class="legend-text">Previsto</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-indicator legend-trend"></span>
+                            <span class="legend-text">Tendência</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Container Gráfico (Mobile Responsive ~185px) -->
+                <div class="chart-canvas-container" id="forecast-chart-container" role="img"
+                    aria-label="Gráfico de linhas demonstrando a evolução de despesas projetadas e a linha de tendência linear">
+                    <div class="chart-loading-state" id="chart-loading-state">
+                        <div class="spinner-sm"></div>
+                        <span>Carregando projeção financeira...</span>
+                    </div>
+                </div>
+
+                <!-- Barra de Resumo e Estatísticas da Tendência -->
+                <div class="chart-footer-stats">
+                    <div class="stat-badge" id="chart-trend-badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" class="stat-icon" id="chart-trend-icon">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                        <span id="chart-trend-text">Calculando tendência...</span>
+                    </div>
+                    <div class="stat-avg" id="chart-avg-text">Média: R$ 0,00</div>
+                </div>
+            </div>
+
+            <!-- Cartão informativo de auditoria -->
+            <div class="audit-card">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                </svg>
+                <p>Os cálculos são sincronizados em tempo real com o seu sistema financeiro. Novos lançamentos ou
+                    alterações refletem imediatamente ao tocar no botão de atualizar.</p>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TELA 4: HISTÓRICO DE LANÇAMENTOS                                   -->
+        <!-- =================================================================== -->
+        <section id="view-historico" class="view">
+            <div class="view-header">
+                <div class="forecast-header-row">
+                    <div>
+                        <h2>Histórico de Lançamentos</h2>
+                        <p id="label-total-historico">Lançamentos em ordem decrescente</p>
+                    </div>
+                    <button type="button" class="icon-btn-refresh" id="btn-atualizar-historico"
+                        title="Atualizar Registros">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabela dos Lançamentos (Colunas C, F e H da aba REGISTROS) -->
+            <div class="table-container">
+                <table class="data-table" id="tabela-registros">
+                    <thead>
+                        <tr>
+                            <th class="th-escopo">Escopo</th>
+                            <th class="th-categoria">Categoria</th>
+                            <th class="th-valor">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-historico-body">
+                        <tr>
+                            <td colspan="3" class="table-loading">Carregando lançamentos...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Controles de Paginação Estilo Shadcn -->
+            <div class="pagination-wrapper" id="historico-pagination-wrapper" style="display: none;">
+                <div class="pagination-info" id="historico-pagination-info">
+                    Exibindo 0 lançamentos
+                </div>
+                <div class="pagination-actions">
+                    <button type="button" class="btn-pagination" id="btn-page-first" title="Primeira página"
+                        aria-label="Primeira página">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="11 17 6 12 11 7" />
+                            <polyline points="18 17 13 12 18 7" />
+                        </svg>
+                    </button>
+                    <button type="button" class="btn-pagination" id="btn-page-prev" title="Página anterior"
+                        aria-label="Página anterior">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                        <span>Anterior</span>
+                    </button>
+                    <span class="pagination-current-pill" id="page-current-pill">1 / 1</span>
+                    <button type="button" class="btn-pagination" id="btn-page-next" title="Próxima página"
+                        aria-label="Próxima página">
+                        <span>Próxima</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                    </button>
+                    <button type="button" class="btn-pagination" id="btn-page-last" title="Última página"
+                        aria-label="Última página">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="13 17 18 12 13 7" />
+                            <polyline points="6 17 11 12 6 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- BARRA DE NAVEGAÇÃO INFERIOR MOBILE (TOUCH DEDICATED)                 -->
+    <!-- ===================================================================== -->
+    <nav class="bottom-nav">
+        <button type="button" class="nav-item active" data-target="view-lancamento">
+            <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                </svg>
+            </div>
+            <span class="nav-label">Lançar</span>
+        </button>
+
+
+        <button type="button" class="nav-item" data-target="view-categorias">
+            <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+                    <line x1="7" y1="7" x2="7.01" y2="7" />
+                </svg>
+            </div>
+            <span class="nav-label">Categorias</span>
+        </button>
+
+        <button type="button" class="nav-item" data-target="view-previsao">
+            <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10" />
+                    <line x1="12" y1="20" x2="12" y2="4" />
+                    <line x1="6" y1="20" x2="6" y2="14" />
+                </svg>
+            </div>
+            <span class="nav-label">Previsão</span>
+        </button>
+
+        <button type="button" class="nav-item" data-target="view-historico">
+            <div class="nav-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="8" y1="6" x2="21" y2="6" />
+                    <line x1="8" y1="12" x2="21" y2="12" />
+                    <line x1="8" y1="18" x2="21" y2="18" />
+                    <line x1="3" y1="6" x2="3.01" y2="6" />
+                    <line x1="3" y1="12" x2="3.01" y2="12" />
+                    <line x1="3" y1="18" x2="3.01" y2="18" />
+                </svg>
+            </div>
+            <span class="nav-label">Histórico</span>
+        </button>
+    </nav>
+
+    <!-- ===================================================================== -->
+    <!-- SISTEMA DE TOAST / NOTIFICAÇÃO                                        -->
+    <!-- ===================================================================== -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>

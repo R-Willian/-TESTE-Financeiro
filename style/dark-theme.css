@@ -1,0 +1,1045 @@
+/**
+ * ============================================================================
+ * FINMOBILE - TEMA ESCURO CYBERSECURITY (DARK THEME)
+ * ============================================================================
+ * Inspirado no design system da suíte Aegis / Cybersecurity SaaS Landing Page.
+ * Paleta Abissal, Acentos Esmeralda Neon (#10B981), Texturas Matriciais,
+ * JetBrains Mono para números/métricas e Efeitos Glassmorphism com Brilho Cyber.
+ *
+ * NOTA: Aplicado estritamente sob [data-theme="dark"] e body.dark-theme.
+ * O tema claro permanece 100% inalterado.
+ * ============================================================================
+ */
+
+/* ==========================================================================
+   1. VARIÁVEIS DO TEMA ESCURO (CYBER TOKENS)
+   ========================================================================== */
+[data-theme="dark"],
+body.dark-theme {
+  /* Fundo Abissal e Superfícies Cyber */
+  --bg-page: #030706;
+  --bg-card: #060D0A;
+  --bg-input: #040907;
+  --bg-input-focus: #07150E;
+  --bg-muted: #050C09;
+
+  /* Paleta Nobre & Neon Aegis */
+  --brand-primary: #10B981;
+  --brand-primary-light: #34D399;
+  --brand-primary-dark: #064E3B;
+  --brand-accent: #10B981;
+  --brand-accent-soft: rgba(16, 185, 129, 0.15);
+
+  /* Semântica Financeira / Telemetria */
+  --color-despesa: #F87171;
+  --color-despesa-soft: rgba(239, 68, 68, 0.16);
+  --color-receita: #10B981;
+  --color-receita-soft: rgba(16, 185, 129, 0.16);
+  --color-warning: #F59E0B;
+  --color-warning-soft: rgba(245, 158, 11, 0.16);
+  --color-info: #38BDF8;
+  --color-info-soft: rgba(56, 189, 248, 0.16);
+
+  /* Tipografia & Contraste */
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-focus: #10B981;
+
+  /* Sombras & Brilhos Neon */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 1px rgba(16, 185, 129, 0.2);
+  --shadow-elevated: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(16, 185, 129, 0.18);
+  --neon-glow: 0 0 20px rgba(16, 185, 129, 0.35);
+
+  /* Gráficos & Visualização Cyber Aegis */
+  --chart-1: #10B981;
+  --chart-2: #94A3B8;
+  --chart-grid: rgba(255, 255, 255, 0.08);
+  --chart-axis: #64748B;
+  --chart-bg: #060D0A;
+  --chart-card-bg: #060D0A;
+  --chart-gradient-start: rgba(16, 185, 129, 0.32);
+  --chart-gradient-end: rgba(16, 185, 129, 0.0);
+  --chart-badge-bg: #190909;
+  --chart-badge-border: rgba(248, 113, 113, 0.55);
+  --chart-badge-text: #F87171; /* Vermelho neon destacado exclusivo para o valor no gráfico */
+}
+
+/* ==========================================================================
+   2. ESTRUTURA GERAL & FUNDO DA PÁGINA (CYBER MATRIX)
+   ========================================================================== */
+html[data-theme="dark"] {
+  background-color: #020504;
+}
+
+body.dark-theme,
+[data-theme="dark"] body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  /* Textura de grade 45deg + gradiente radial superior idêntico ao template Aegis */
+  background-image:
+    radial-gradient(ellipse 90% 50% at 50% -10%, rgba(16, 185, 129, 0.16) 0%, transparent 75%),
+    repeating-linear-gradient(45deg,
+      rgba(16, 185, 129, 0.018) 0,
+      rgba(16, 185, 129, 0.018) 1px,
+      transparent 1px,
+      transparent 28px);
+  background-attachment: fixed;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.9), 0 0 100px rgba(16, 185, 129, 0.08);
+  border-left: 1px solid rgba(16, 185, 129, 0.12);
+  border-right: 1px solid rgba(16, 185, 129, 0.12);
+}
+
+/* Seleção de texto estilo Cybersecurity */
+[data-theme="dark"] ::selection {
+  background-color: rgba(16, 185, 129, 0.35);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   3. ANIMAÇÕES CYBER DO TEMPLATE
+   ========================================================================== */
+@keyframes status-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 10px #10B981;
+  }
+
+  50% {
+    opacity: 0.35;
+    transform: scale(0.85);
+    box-shadow: 0 0 2px #10B981;
+  }
+}
+
+@keyframes cyberGlowPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+  }
+
+  50% {
+    box-shadow: 0 0 28px rgba(16, 185, 129, 0.45);
+  }
+}
+
+/* ==========================================================================
+   4. TOP APP BAR CYBERNETIC
+   ========================================================================== */
+[data-theme="dark"] .top-bar {
+  background: rgba(3, 7, 6, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(16, 185, 129, 0.2);
+}
+
+[data-theme="dark"] .brand-icon {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #10B981;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
+}
+
+[data-theme="dark"] .brand-text h1 {
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+
+[data-theme="dark"] .sub-brand {
+  color: #10B981;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+/* Top bar actions & Status */
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+[data-theme="dark"] .status-indicator {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #10B981;
+}
+
+[data-theme="dark"] .status-dot.online {
+  background-color: #10B981;
+  box-shadow: 0 0 8px #10B981;
+  animation: status-pulse 1.5s ease-in-out infinite;
+}
+
+[data-theme="dark"] .status-dot.syncing {
+  background-color: #F59E0B;
+  box-shadow: 0 0 8px #F59E0B;
+}
+
+[data-theme="dark"] .status-dot.error {
+  background-color: #EF4444;
+  box-shadow: 0 0 8px #EF4444;
+}
+
+/* ==========================================================================
+   5. BOTÃO DE TOGGLE DE TEMA (CLARO / ESCURO)
+   ========================================================================== */
+.theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: scale(1.06);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.92);
+}
+
+/* No tema claro: exibe a lua (sugere ir para o escuro) */
+.theme-toggle-btn .icon-sun {
+  display: none;
+}
+
+.theme-toggle-btn .icon-moon {
+  display: block;
+}
+
+/* No tema escuro: estilo cyber com brilho e exibe o sol (sugere ir para o claro) */
+[data-theme="dark"] .theme-toggle-btn {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #10B981;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
+}
+
+[data-theme="dark"] .theme-toggle-btn:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10B981;
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.45);
+  transform: scale(1.06) rotate(15deg);
+}
+
+[data-theme="dark"] .theme-toggle-btn .icon-sun {
+  display: block;
+}
+
+[data-theme="dark"] .theme-toggle-btn .icon-moon {
+  display: none;
+}
+
+/* ==========================================================================
+   6. CABEÇALHOS DE VISUALIZAÇÃO & TIPOGRAFIA CYBER
+   ========================================================================== */
+[data-theme="dark"] .view-header h2 {
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Marcação de status no cabeçalho */
+[data-theme="dark"] .view-header h2::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: #10B981;
+  border-radius: 2px;
+  box-shadow: 0 0 10px #10B981;
+}
+
+[data-theme="dark"] .view-header p {
+  color: #94A3B8;
+  font-size: 13px;
+}
+
+[data-theme="dark"] .group-label {
+  color: #CBD5E1;
+  letter-spacing: 0.02em;
+}
+
+[data-theme="dark"] .text-link-btn {
+  color: #34D399;
+}
+
+[data-theme="dark"] .text-link-btn:hover {
+  color: #10B981;
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+[data-theme="dark"] .text-link-btn:active {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+/* ==========================================================================
+   7. INPUTS, SELECTS E ENTRADA MONETÁRIA COM FONTE MONO
+   ========================================================================== */
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select {
+  background-color: #060D0A;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  color: #F8FAFC;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .form-input::placeholder {
+  color: #475569;
+}
+
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-select:focus {
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2), 0 0 18px rgba(16, 185, 129, 0.25);
+  background-color: #07150E;
+}
+
+[data-theme="dark"] .select-wrapper::after {
+  border-right-color: #94A3B8;
+  border-bottom-color: #94A3B8;
+}
+
+[data-theme="dark"] .form-select option {
+  background-color: #060D0A;
+  color: #F8FAFC;
+}
+
+/* Campo Monetário em Destaque (JetBrains Mono) */
+[data-theme="dark"] .input-money-wrapper {
+  background-color: #060D0A;
+  border: 2px solid rgba(16, 185, 129, 0.3);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .input-money-wrapper:focus-within {
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22), 0 0 24px rgba(16, 185, 129, 0.3);
+  background-color: #07150E;
+}
+
+[data-theme="dark"] .currency-prefix {
+  color: #10B981;
+  font-family: 'JetBrains Mono', monospace;
+  text-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+}
+
+[data-theme="dark"] .input-money {
+  color: #FFFFFF;
+  font-family: 'JetBrains Mono', 'Inter', monospace;
+  letter-spacing: 0.02em;
+}
+
+/* Inputs de data no tema escuro (ícone do calendário) */
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8) sepia(1) saturate(5) hue-rotate(100deg);
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   8. SEGMENTED CONTROLS (SELETORES TÁTEIS CYBER)
+   ========================================================================== */
+[data-theme="dark"] .segmented-control {
+  background-color: #050C09;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .segment-btn {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .segment-btn:hover {
+  color: #E2E8F0;
+}
+
+[data-theme="dark"] .segment-btn.active {
+  background-color: #0C1E16;
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+[data-theme="dark"] .segment-btn.type-despesa.active {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #F87171;
+  border-bottom: 2px solid #EF4444;
+  border-color: rgba(239, 68, 68, 0.45);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(239, 68, 68, 0.25);
+}
+
+[data-theme="dark"] .segment-btn.type-receita.active {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #34D399;
+  border-bottom: 2px solid #10B981;
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(16, 185, 129, 0.25);
+}
+
+/* ==========================================================================
+   9. CARDS, SWITCHES E SUPERFÍCIES GLASSMORPHISM
+   ========================================================================== */
+[data-theme="dark"] .form-card {
+  background: rgba(6, 13, 10, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  position: relative;
+}
+
+[data-theme="dark"] .toggle-title {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .toggle-subtitle {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .switch .slider {
+  background-color: #1E293B;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] input:checked+.slider {
+  background-color: #10B981;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.45);
+}
+
+[data-theme="dark"] .slider::before {
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================================================
+   10. CONFIGURAÇÃO & PREVIEW DE PARCELAS
+   ========================================================================== */
+[data-theme="dark"] .parcelas-config-box {
+  background-color: #040907;
+  border: 1.5px dashed rgba(16, 185, 129, 0.35);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .stepper-btn {
+  background-color: #07150E;
+  border: 1.5px solid rgba(16, 185, 129, 0.3);
+  color: #10B981;
+}
+
+[data-theme="dark"] .stepper-btn:hover {
+  background-color: rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
+[data-theme="dark"] .stepper-btn:active {
+  background-color: rgba(16, 185, 129, 0.25);
+}
+
+[data-theme="dark"] .stepper-input {
+  background-color: #060D0A;
+  border: 1.5px solid rgba(16, 185, 129, 0.3);
+  color: #34D399;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+[data-theme="dark"] .parcelas-preview-box {
+  background-color: #060D0A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .preview-header {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .badge-tag {
+  background-color: rgba(16, 185, 129, 0.14);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.15);
+}
+
+[data-theme="dark"] .preview-list li {
+  background-color: #030706;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #E2E8F0;
+}
+
+[data-theme="dark"] .preview-list li .parc-num {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .preview-list li .parc-date {
+  color: #64748B;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+[data-theme="dark"] .preview-list li .parc-val {
+  color: #F87171;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ==========================================================================
+   11. BOTÕES CYBERNETIC (BRILHO NEON & GRADIENTE)
+   ========================================================================== */
+[data-theme="dark"] .btn-primary {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #030706;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.38), 0 4px 14px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  box-shadow: 0 0 32px rgba(16, 185, 129, 0.55), 0 6px 18px rgba(0, 0, 0, 0.6);
+  filter: brightness(1.08);
+}
+
+[data-theme="dark"] .btn-primary:active {
+  transform: scale(0.98);
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.4);
+}
+
+[data-theme="dark"] .btn-primary .btn-spinner {
+  border-color: rgba(3, 7, 6, 0.3);
+  border-top-color: #030706;
+}
+
+[data-theme="dark"] .btn-secondary {
+  background-color: rgba(16, 185, 129, 0.08);
+  color: #34D399;
+  border: 1.5px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.12);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background-color: rgba(16, 185, 129, 0.16);
+  border-color: #10B981;
+  box-shadow: 0 0 22px rgba(16, 185, 129, 0.25);
+}
+
+[data-theme="dark"] .btn-secondary:active {
+  background-color: rgba(16, 185, 129, 0.22);
+}
+
+[data-theme="dark"] .btn-secondary .btn-spinner {
+  border-color: rgba(16, 185, 129, 0.25);
+  border-top-color: #10B981;
+}
+
+/* ==========================================================================
+   12. TELA DE CATEGORIAS (CAD_AUX)
+   ========================================================================== */
+[data-theme="dark"] .section-title-row h3 {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .chip {
+  background-color: #060D0A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .chip.active {
+  background-color: rgba(16, 185, 129, 0.18);
+  color: #34D399;
+  border-color: #10B981;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
+}
+
+[data-theme="dark"] .cat-badge {
+  background-color: #060D0A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #E2E8F0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .cat-badge.despesa {
+  border-left: 3px solid #EF4444;
+}
+
+[data-theme="dark"] .cat-badge.receita {
+  border-left: 3px solid #10B981;
+}
+
+[data-theme="dark"] .empty-state {
+  color: #64748B;
+}
+
+/* ==========================================================================
+   13. TELA DE PREVISÃO DO PRÓXIMO MÊS (CYBER SOC DASHBOARD)
+   ========================================================================== */
+[data-theme="dark"] .icon-btn-refresh {
+  background-color: #060D0A;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #10B981;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.18);
+}
+
+[data-theme="dark"] .icon-btn-refresh:hover {
+  background-color: rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.35);
+}
+
+[data-theme="dark"] .forecast-pill {
+  background: #060D0A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .forecast-pill.active {
+  background: rgba(16, 185, 129, 0.18);
+  color: #34D399;
+  border-color: #10B981;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.28);
+}
+
+/* Card Herói de Previsão inspirado no painel Aegis */
+[data-theme="dark"] .forecast-hero-card {
+  background: linear-gradient(135deg, #051A11 0%, #030806 100%);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.2), 0 14px 35px rgba(0, 0, 0, 0.7);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Linha superior de neon no card herói */
+[data-theme="dark"] .forecast-hero-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #10B981, transparent);
+  box-shadow: 0 0 10px #10B981;
+  z-index: 5;
+}
+
+[data-theme="dark"] .hero-caption {
+  color: #34D399;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+}
+
+[data-theme="dark"] .hero-period {
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #6EE7B7;
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.15);
+}
+
+[data-theme="dark"] .hero-amount {
+  color: #FFFFFF;
+  font-family: 'JetBrains Mono', 'Inter', monospace;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 28px rgba(16, 185, 129, 0.45);
+  font-weight: 800;
+}
+
+[data-theme="dark"] .hero-formula-hint {
+  color: #94A3B8;
+  font-size: 11px;
+}
+
+/* Subcards de Detalhamento */
+[data-theme="dark"] .breakdown-card {
+  background-color: #060D0A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .breakdown-icon.blue {
+  background-color: rgba(56, 189, 248, 0.14);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+}
+
+[data-theme="dark"] .breakdown-icon.purple {
+  background-color: rgba(168, 85, 247, 0.14);
+  color: #C084FC;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+}
+
+[data-theme="dark"] .breakdown-label {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .breakdown-value {
+  color: #FFFFFF;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .breakdown-count {
+  color: #64748B;
+}
+
+/* ==========================================================================
+   CHIPS DE COMPETÊNCIA (CYBER DARK DESIGN SYSTEM)
+   ========================================================================== */
+[data-theme="dark"] .forecast-chip {
+  background: rgba(6, 13, 10, 0.85);
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .forecast-chip .chip-label {
+  color: #E2E8F0;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+[data-theme="dark"] .forecast-chip .chip-sub {
+  color: #64748B;
+}
+
+[data-theme="dark"] .forecast-chip:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #F1F5F9;
+}
+
+[data-theme="dark"] .forecast-chip.active {
+  background: rgba(16, 185, 129, 0.18);
+  border-color: #10B981;
+  color: #34D399;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+}
+
+[data-theme="dark"] .forecast-chip.active .chip-label {
+  color: #34D399;
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+[data-theme="dark"] .forecast-chip.active .chip-sub {
+  color: #A7F3D0;
+}
+
+/* ==========================================================================
+   GRÁFICO DE EVOLUÇÃO DE DESPESAS (CYBER DARK DESIGN SYSTEM)
+   ========================================================================== */
+[data-theme="dark"] .forecast-chart-card {
+  background: #060D0A;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 1px rgba(16, 185, 129, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .forecast-chart-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #10B981, transparent);
+  box-shadow: 0 0 10px #10B981;
+  z-index: 5;
+}
+
+[data-theme="dark"] .chart-title {
+  color: #F1F5F9;
+}
+
+[data-theme="dark"] .chart-title-icon {
+  color: #10B981;
+  filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.6));
+}
+
+[data-theme="dark"] .chart-subtitle {
+  color: #64748B;
+}
+
+[data-theme="dark"] .legend-text {
+  color: #94A3B8;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+[data-theme="dark"] .legend-indicator.legend-primary {
+  background: #10B981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.7);
+}
+
+[data-theme="dark"] .legend-indicator.legend-trend {
+  border-top-color: #94A3B8;
+}
+
+[data-theme="dark"] .chart-footer-stats {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .stat-badge {
+  background: #0B1912;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .stat-badge.trend-up {
+  background: rgba(239, 68, 68, 0.16);
+  color: #F87171;
+  border-color: rgba(239, 68, 68, 0.35);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.15);
+}
+
+[data-theme="dark"] .stat-badge.trend-down {
+  background: rgba(16, 185, 129, 0.16);
+  color: #34D399;
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+}
+
+[data-theme="dark"] .stat-badge.trend-stable {
+  background: rgba(148, 163, 184, 0.12);
+  color: #CBD5E1;
+  border-color: rgba(148, 163, 184, 0.25);
+}
+
+[data-theme="dark"] .stat-avg {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .spinner-sm {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: #10B981;
+}
+
+/* Cartão Informativo de Auditoria */
+[data-theme="dark"] .audit-card {
+  background-color: #050C09;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .audit-card svg {
+  color: #10B981;
+  filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.5));
+}
+
+/* ==========================================================================
+   14. BOTTOM NAVIGATION CYBER TOUCH (GLASSMORPHISM)
+   ========================================================================== */
+[data-theme="dark"] .bottom-nav {
+  background-color: rgba(3, 7, 6, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(16, 185, 129, 0.18);
+  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.75), 0 -1px 0 rgba(16, 185, 129, 0.15);
+}
+
+[data-theme="dark"] .nav-item {
+  color: #64748B;
+}
+
+[data-theme="dark"] .nav-item:hover {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .nav-item.active {
+  color: #10B981;
+}
+
+[data-theme="dark"] .nav-item.active .nav-icon {
+  color: #10B981;
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
+}
+
+[data-theme="dark"] .nav-item.active .nav-label {
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+/* ==========================================================================
+   15. NOTIFICAÇÕES TOAST CYBER
+   ========================================================================== */
+[data-theme="dark"] .toast {
+  background-color: #060D0A;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #F1F5F9;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(16, 185, 129, 0.2);
+  border-left-width: 4px;
+}
+
+[data-theme="dark"] .toast.success {
+  border-left-color: #10B981;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(16, 185, 129, 0.25);
+}
+
+[data-theme="dark"] .toast.error {
+  border-left-color: #EF4444;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(239, 68, 68, 0.25);
+}
+
+[data-theme="dark"] .toast.warning {
+  border-left-color: #F59E0B;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(245, 158, 11, 0.25);
+}
+
+/* ==========================================================================
+   16. TRANSIÇÕES SUAVES NA ALTERNÂNCIA DE TEMA
+   ========================================================================== */
+body,
+.top-bar,
+.bottom-nav,
+.form-card,
+.form-input,
+.form-select,
+.input-money-wrapper,
+.segmented-control,
+.segment-btn,
+.btn,
+.forecast-hero-card,
+.breakdown-card,
+.theme-toggle-btn {
+  transition: background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* ==========================================================================
+   17. SCROLLBAR CYBERNETIC NO TEMA ESCURO
+   ========================================================================== */
+[data-theme="dark"] ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #030706;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.25);
+  border-radius: 999px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+/* ==========================================================================
+   18. TEXTURAS E UTILITÁRIOS DA SUÍTE CYBERSECURITY
+   ========================================================================== */
+[data-theme="dark"] .bg-grid-pattern {
+  background-image: repeating-linear-gradient(45deg,
+      rgba(16, 185, 129, 0.015) 0,
+      rgba(16, 185, 129, 0.015) 1px,
+      transparent 1px,
+      transparent 32px);
+}
+
+[data-theme="dark"] .dotted-texture {
+  background-image: radial-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+[data-theme="dark"] .dotted-texture-dense {
+  background-image: radial-gradient(rgba(16, 185, 129, 0.12) 1px, transparent 1px);
+  background-size: 6px 6px;
+}
+
+/* Cantos decorativos estilo HUD / Cybersecurity nos cartões principais */
+[data-theme="dark"] .form-card,
+[data-theme="dark"] .forecast-hero-card {
+  position: relative;
+}
+
+[data-theme="dark"] .form-card::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid #10B981;
+  border-right: 2px solid #10B981;
+  border-top-right-radius: var(--radius-md);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   19. TABELA DE HISTÓRICO NO TEMA ESCURO
+   ========================================================================== */
+[data-theme="dark"] .table-container {
+  background-color: var(--bg-card);
+  border-color: var(--border-light);
+}
+
+[data-theme="dark"] .data-table thead tr {
+  background-color: #040907;
+  border-bottom-color: var(--border-light);
+}
+
+[data-theme="dark"] .data-table th {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .data-table tbody td {
+  border-bottom-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .badge-escopo.pessoal {
+  background-color: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+[data-theme="dark"] .badge-escopo.empresarial {
+  background-color: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+[data-theme="dark"] .cat-name {
+  color: var(--text-primary);
+}
+
+/* Paginação no Tema Escuro */
+[data-theme="dark"] .pagination-wrapper {
+  background-color: var(--bg-card);
+  border-color: var(--border-light);
+}
+
+[data-theme="dark"] .btn-pagination {
+  background-color: #18181b;
+  border-color: var(--border-light);
+  color: #fafafa;
+}
+
+[data-theme="dark"] .btn-pagination:hover:not(:disabled) {
+  background-color: #27272a;
+}
+
+[data-theme="dark"] .pagination-current-pill {
+  background-color: #27272a;
+  border-color: var(--border-light);
+  color: #fafafa;
+}
